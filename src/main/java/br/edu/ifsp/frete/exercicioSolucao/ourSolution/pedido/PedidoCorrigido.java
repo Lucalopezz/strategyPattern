@@ -32,8 +32,13 @@ public class PedidoCorrigido {
     }
 
     public BigDecimal calcularTotal() {
-        BigDecimal total = valorItens.add(calcularFrete()).subtract(calcularDesconto());
-        return total.setScale(2, RoundingMode.HALF_UP);
+        //nesse caso inves de chamar o metodo calcularDesconto
+        //crio a variavel contexto para evitar recalculo de frete
+        //pois o metodo calcularFrete ja está sendo chamado pelo contexto
+        var context = getPedidoContext();
+        return valorItens.add(context.valorFrete())
+                .subtract(descontoStrategy.calcular(context))
+                .setScale(2, RoundingMode.HALF_UP);
     }
 
     public void setDescontoStrategy(DescontoStrategy descontoStrategy) {
@@ -42,7 +47,7 @@ public class PedidoCorrigido {
         this.descontoStrategy = descontoStrategy;
     }
 
-    public PedidoContext getPedidoContext() {
+    private PedidoContext getPedidoContext() {
         return new PedidoContext(valorItens, calcularFrete());
     }
 
