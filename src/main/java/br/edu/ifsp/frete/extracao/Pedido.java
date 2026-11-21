@@ -1,6 +1,9 @@
 package br.edu.ifsp.frete.extracao;
 
-import br.edu.ifsp.frete.strategy.*;
+import br.edu.ifsp.frete.withStrategy.domain.frete.FreteExpresso;
+import br.edu.ifsp.frete.withStrategy.domain.frete.FreteNormal;
+import br.edu.ifsp.frete.withStrategy.domain.frete.FreteStrategy;
+import br.edu.ifsp.frete.withStrategy.domain.frete.RetiradaNaLoja;
 
 import java.math.BigDecimal;
 

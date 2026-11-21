@@ -1,6 +1,6 @@
 package br.edu.ifsp.frete.exercicio;
 
-import br.edu.ifsp.frete.strategy.FreteExpresso;
+import br.edu.ifsp.frete.withStrategy.domain.frete.FreteExpresso;
 
 import java.math.BigDecimal;
 

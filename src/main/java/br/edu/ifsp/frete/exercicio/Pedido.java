@@ -1,6 +1,6 @@
 package br.edu.ifsp.frete.exercicio;
 
-import br.edu.ifsp.frete.strategy.FreteStrategy;
+import br.edu.ifsp.frete.withStrategy.domain.frete.FreteStrategy;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
