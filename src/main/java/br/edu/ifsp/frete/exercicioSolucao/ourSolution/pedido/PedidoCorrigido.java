@@ -12,11 +12,21 @@ public class PedidoCorrigido {
     private FreteStrategy freteStrategy;
     private DescontoStrategy descontoStrategy;
 
-    public PedidoCorrigido(BigDecimal valorItens, BigDecimal pesoKg, FreteStrategy frete, DescontoStrategy descontoStrategy) {
+    private PedidoCorrigido(BigDecimal valorItens, BigDecimal pesoKg, FreteStrategy frete, DescontoStrategy descontoStrategy) {
         this.valorItens = valorItens;
         this.pesoKg = pesoKg;
         this.freteStrategy = frete;
         this.descontoStrategy = descontoStrategy;
+    }
+
+    public static PedidoCorrigido createPedido(BigDecimal valorItens, BigDecimal pesoKg, FreteStrategy frete, DescontoStrategy descontoStrategy) {
+        if (valorItens == null || valorItens.compareTo(BigDecimal.ZERO) < 1)
+            throw new IllegalArgumentException(" valor de itens inválido");
+        if (pesoKg == null || pesoKg.compareTo(BigDecimal.ZERO) < 1)
+            throw new IllegalArgumentException("peso inválido");
+        if (frete == null) throw new IllegalArgumentException("estrategia de frete não pode ser nula");
+        if (descontoStrategy == null) throw new IllegalArgumentException("estrategia de desconto não pode ser nula");
+        return new PedidoCorrigido(valorItens, pesoKg, frete, descontoStrategy);
     }
 
     public BigDecimal calcularFrete() {
@@ -43,7 +53,7 @@ public class PedidoCorrigido {
 
     public void setDescontoStrategy(DescontoStrategy descontoStrategy) {
         if (descontoStrategy == null)
-            throw new IllegalStateException("a estrategia do calculo do desconto não pode ser nula");
+            throw new IllegalArgumentException("a estrategia do calculo do desconto não pode ser nula");
         this.descontoStrategy = descontoStrategy;
     }
 
@@ -53,7 +63,7 @@ public class PedidoCorrigido {
 
     public void setFreteStrategy(FreteStrategy freteStrategy) {
         if (freteStrategy == null)
-            throw new IllegalStateException("a estrategia do calculo de frete não pode ser nula");
+            throw new IllegalArgumentException("a estrategia do calculo de frete não pode ser nula");
         this.freteStrategy = freteStrategy;
     }
 }

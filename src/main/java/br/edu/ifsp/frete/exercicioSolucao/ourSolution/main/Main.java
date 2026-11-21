@@ -20,7 +20,7 @@ public class Main {
                 new FreteEconomico(),
                 new FreteNormal()
         };
-        PedidoCorrigido pedido = new PedidoCorrigido(BigDecimal.valueOf(100), BigDecimal.valueOf(9.78), new FreteExpresso(), new DescontoFixo());
+        PedidoCorrigido pedido = PedidoCorrigido.createPedido(BigDecimal.valueOf(100), BigDecimal.valueOf(9.78), new FreteExpresso(), new DescontoFixo());
         // para demonstrar a troca de estrategias
         System.out.printf("frete: %.2f \n", pedido.calcularFrete());
         System.out.printf("desconto: %.2f \n", pedido.calcularDesconto());
