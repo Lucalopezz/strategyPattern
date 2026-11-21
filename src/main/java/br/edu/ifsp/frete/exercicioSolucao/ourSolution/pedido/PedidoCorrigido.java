@@ -30,14 +30,10 @@ public class PedidoCorrigido {
     }
 
     public BigDecimal calcularFrete() {
-        if (freteStrategy == null)
-            throw new IllegalStateException("a estrategia do calculo de frete não pode ser nula");
         return freteStrategy.calcular(pesoKg);
     }
 
     public BigDecimal calcularDesconto() {
-        if (descontoStrategy == null)
-            throw new IllegalStateException("a estrategia do calculo do desconto não pode ser nula");
         return descontoStrategy.calcular(getPedidoContext());
     }
 
