@@ -1,18 +1,40 @@
 package br.edu.ifsp.frete.exercicioSolucao.ourSolution.main;
 
+import br.edu.ifsp.frete.exercicioSolucao.ourSolution.desconto.*;
 import br.edu.ifsp.frete.exercicioSolucao.ourSolution.pedido.Pedido;
-import br.edu.ifsp.frete.withStrategy.domain.frete.FreteExpresso;
+import br.edu.ifsp.frete.exercicioSolucao.ourSolution.pedido.PedidoCorrigido;
+import br.edu.ifsp.frete.withStrategy.domain.frete.*;
 
 import java.math.BigDecimal;
 
 public class Main {
     public static void main(String[] args) {
-        BigDecimal valor = new BigDecimal("150.00");
-        BigDecimal peso = new BigDecimal("3");
-
-        for (String cupom : new String[]{"nenhum", "percentual", "valorFixo", "freteGratis"}) {
-            Pedido pedido = new Pedido(valor, peso, new FreteExpresso(), cupom);
-            System.out.println(cupom + ": R$ " + pedido.calcularTotal());
+        DescontoStrategy[] descontoStrategies = {
+                new DescontoFreteGratis(),
+                new DescontoNenhum(),
+                new DescontoPercentual(),
+                new DescontoPrimeiraCompra()
+        };
+        FreteStrategy[] freteStrategies = {
+                new RetiradaNaLoja(),
+                new FreteEconomico(),
+                new FreteNormal()
+        };
+        PedidoCorrigido pedido = new PedidoCorrigido(BigDecimal.valueOf(100), BigDecimal.valueOf(9.78), new FreteExpresso(), new DescontoFixo());
+        // para demonstrar a troca de estrategias
+        System.out.printf("frete: %.2f \n", pedido.calcularFrete());
+        System.out.printf("desconto: %.2f \n", pedido.calcularDesconto());
+        System.out.printf("total: %.2f \n",pedido.calcularTotal());
+        for (DescontoStrategy descontoStrategy : descontoStrategies) {
+            System.out.println("---------trocando estrategia de desconto-------------");
+            pedido.setDescontoStrategy(descontoStrategy);
+            for (FreteStrategy freteStrategy : freteStrategies) {
+                pedido.setFreteStrategy(freteStrategy);
+                System.out.println("==========================================");
+                System.out.printf("frete: %.2f \n", pedido.calcularFrete());
+                System.out.printf("desconto: %.2f \n", pedido.calcularDesconto());
+                System.out.printf("total: %.2f \n",pedido.calcularTotal());
+            }
         }
     }
 }
